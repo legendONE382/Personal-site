@@ -1,0 +1,14 @@
+# Netlify headers. (Vercel uses vercel.json for the same thing.)
+# Hashed build output is immutable: cache it for a year.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+# The shell must always revalidate so a new deploy is picked up.
+/index.html
+  Cache-Control: no-cache
+/sw.js
+  Cache-Control: no-cache
+/
+  Cache-Control: no-cache

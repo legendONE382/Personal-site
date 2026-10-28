@@ -1,0 +1,5 @@
+[build]
+  command = "npm run build:static"
+  publish = "dist"
+
+# Headers live in public/_headers (copied into dist by Vite).

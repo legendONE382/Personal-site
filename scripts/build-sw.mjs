@@ -10,8 +10,9 @@
 import { createHash } from 'node:crypto'
 import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const dist = new URL('../dist/', import.meta.url).pathname
+const dist = fileURLToPath(new URL('../dist/', import.meta.url))
 const files = []
 const walk = (dir) => {
   for (const name of readdirSync(dir)) {
@@ -32,5 +33,5 @@ sw = sw.replace("const SHELL = ['/', '/index.html', '/manifest.webmanifest']", `
 writeFileSync(swPath, sw)
 
 const kb = (n) => (n / 1024).toFixed(0) + ' KB'
-const total = precache.reduce((s, f) => s + statSync(join(dist, f)).size, 0)
+const total = precache.reduce((s, f) => s + statSync(join(dist, f.slice(1))).size, 0)
 console.log(`[sw] precaching ${precache.length} files (${kb(total)}) as ${version}`)

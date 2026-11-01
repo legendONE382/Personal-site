@@ -1,11 +1,11 @@
-import shotAsk from '../assets/shots/askdocs.webp'
-import shotVolt from '../assets/shots/voltwatch.webp'
-import shotMaritime from '../assets/shots/maritime.webp'
-import shotEstech from '../assets/shots/estech.webp'
-import shotCopilot from '../assets/shots/copilot.webp'
-import shotLumoraHome from '../assets/shots/lumora-home.webp'
-import shotLumoraGen from '../assets/shots/lumora-gen.webp'
-import shotTrade from '../assets/shots/tradepulse.webp'
+import shotAsk from '../assets/shots/askdocs.png'
+import shotVolt from '../assets/shots/voltwatch.png'
+import shotMaritime from '../assets/shots/maritime.png'
+import shotEstech from '../assets/shots/estech.png'
+import shotCopilot from '../assets/shots/copilot.png'
+import shotLumoraHome from '../assets/shots/lumora-home.png'
+import shotLumoraGen from '../assets/shots/lumora-gen.png'
+import shotTrade from '../assets/shots/tradepulse.png'
 
 /**
  * Studio content.

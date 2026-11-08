@@ -369,6 +369,7 @@ function Experience({ reduced, patient }: { reduced: boolean; patient: boolean }
         onSkip={skipIntro}
         onFull={toggleFull}
         onCalm={calm}
+        onCV={cv}
       />
       <Menu
         open={menu}
@@ -394,7 +395,7 @@ function Experience({ reduced, patient }: { reduced: boolean; patient: boolean }
         />
       )}
       {dossier !== null && <Dossier tab={dossier} onTab={setDossier} onClose={() => setDossier(null)} onCase={openCase} />}
-      {caseSlug && <CaseStudy slug={caseSlug} onClose={closeCase} onNav={openCase} />}
+      {caseSlug && <CaseStudy slug={caseSlug} onClose={closeCase} onNav={openCase} onJump={jump} />}
       <Cursor />
       {toast && (
         <div role="status" className="toast">

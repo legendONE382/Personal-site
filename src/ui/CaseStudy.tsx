@@ -6,10 +6,11 @@ interface Props {
   slug: string
   onClose: () => void
   onNav: (slug: string) => void
+  onJump: (k: number) => void
 }
 
 /** Full case study: real screenshots (and the real generated video for Lumora), architecture, decisions, honest limitations. */
-export function CaseStudy({ slug, onClose, onNav }: Props) {
+export function CaseStudy({ slug, onClose, onNav, onJump }: Props) {
   const idx = Math.max(0, projects.findIndex((p) => p.slug === slug))
   const p = projects[idx]
   const prev = projects[(idx - 1 + projects.length) % projects.length]
@@ -41,8 +42,11 @@ export function CaseStudy({ slug, onClose, onNav }: Props) {
         <button className="btn" onClick={onClose} data-cursor="Back">
           <span aria-hidden>←</span> Back to the journey
         </button>
+        <button className="btn hide-sm" onClick={() => onJump(2)} data-cursor="Back">
+          Back to Projects
+        </button>
         <span className="sheet__count hide-sm">
-          Case study {p.index} / 04 — {p.title}
+          Project {p.index} of 04 — {p.title}
         </span>
         <a className="btn btn--primary" href={p.live ?? p.repo} target="_blank" rel="noreferrer">
           {p.live ? 'Live demo' : 'Source'} <span aria-hidden>↗</span>
@@ -121,9 +125,9 @@ export function CaseStudy({ slug, onClose, onNav }: Props) {
           ))}
         </div>
 
-        <nav className="pager" aria-label="More case studies">
-          <button onClick={() => onNav(prev.slug)}><small>← Previous</small><span>{prev.title}</span></button>
-          <button onClick={() => onNav(next.slug)}><small>Next →</small><span>{next.title}</span></button>
+        <nav className="pager" aria-label="Navigate between case studies">
+          <button onClick={() => onNav(prev.slug)} aria-label={`Previous project: ${prev.title}`}><small>Previous project</small><span>{prev.title}</span></button>
+          <button onClick={() => onNav(next.slug)} aria-label={`Next project: ${next.title}`}><small>Next project</small><span>{next.title}</span></button>
         </nav>
       </div>
     </div>

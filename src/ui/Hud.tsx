@@ -15,22 +15,30 @@ interface Props {
   onSkip: () => void
   onFull: () => void
   onCalm: () => void
+  onCV: () => void
 }
 
 const canFull = typeof document !== 'undefined' && 'requestFullscreen' in HTMLElement.prototype
 
 /** Always-reachable chrome: it never covers the world and never blocks it. */
-export function Hud({ scene, live, intro, sound, menuOpen, full, onSound, onMenu, onDossier, onJump, onSkip, onFull, onCalm }: Props) {
+export function Hud({ scene, live, intro, sound, menuOpen, full, onSound, onMenu, onDossier, onJump, onSkip, onFull, onCalm, onCV }: Props) {
   return (
     <>
       <header className="hud hud--top">
-        <button className="brand" onClick={() => onJump(0)} aria-label="Emmanuel Uchenna — back to the start" data-cursor="Start">
+        <button className="brand" onClick={() => onJump(0)} aria-label="Emmanuel Uchenna — Home" data-cursor="Start">
           <span className="brand__mark" aria-hidden="true" />
           <span>
             <span className="brand__name">Emmanuel Uchenna</span>
             <span className="brand__sub">Software studio · Lagos</span>
           </span>
         </button>
+        <nav className="hud__primary" aria-label="Primary navigation">
+          <a className="nav-item" onClick={() => onJump(0)}>Home</a>
+          <a className="nav-item" onClick={() => onJump(1)}>About</a>
+          <a className="nav-item" onClick={() => onJump(2)}>Projects</a>
+          <a className="nav-item" onClick={() => onJump(6)}>Contact</a>
+          <button className="nav-item nav-item--cv" onClick={onCV}>Download CV ↓</button>
+        </nav>
         <nav className="hud__right" aria-label="Utilities">
           <button className="link-btn hide-sm" onClick={onDossier}>Dossier</button>
           <button className="link-btn" aria-pressed={sound} onClick={onSound}>

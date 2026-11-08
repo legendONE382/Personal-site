@@ -26,6 +26,7 @@ export const studio = {
   role: 'Full-Stack Developer | AI Application Developer',
   email: 'ue9938090@gmail.com',
   github: 'https://github.com/legendONE382',
+  linkedin: 'https://www.linkedin.com/in/emmanuel-developer',
   location: 'Lagos, Nigeria',
   brand: 'Estech Solutions',
   brandUrl: 'https://estech-solutions.vercel.app/',

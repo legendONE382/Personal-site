@@ -38,6 +38,7 @@ export function Dossier({ tab, onTab, onClose, onCase }: Props) {
         <button className="btn" onClick={onClose} data-cursor="Back"><span aria-hidden>←</span> Back to the journey</button>
         <span className="sheet__count hide-sm">Dossier</span>
         <a className="btn btn--primary" href={`mailto:${studio.email}`}>Email me ↗</a>
+        <a className="btn" href={studio.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
       </div>
 
       <div className="sheet__inner">

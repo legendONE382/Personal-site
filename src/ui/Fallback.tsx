@@ -30,7 +30,15 @@ export default function Fallback({ reason, note, onRetry }: { reason: string; no
         )}
       </p>
 
-      <h1>
+      <nav className="fb-nav" aria-label="Main navigation">
+        <a href="#fb-home">Home</a>
+        <a href="#fb-work">Projects</a>
+        <a href="#fb-more">More work</a>
+        <a href="#fb-contact">Contact</a>
+        <button className="btn" onClick={openCV}>CV ↓</button>
+      </nav>
+
+      <h1 id="fb-home">
         Software
         <br />
         <em>that ships.</em>
@@ -42,6 +50,7 @@ export default function Fallback({ reason, note, onRetry }: { reason: string; no
         <a className="btn btn--primary" href={`mailto:${studio.email}`}>Email me ↗</a>
         <button className="btn" onClick={openCV}>CV ↓</button>
         <a className="btn" href={studio.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a className="btn" href={studio.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
       </div>
 
       <section aria-labelledby="fb-work">

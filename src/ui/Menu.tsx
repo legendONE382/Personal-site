@@ -42,6 +42,7 @@ export function Menu({ open, scene, onJump, onHover, onDossier, onCV }: Props) {
         <button tabIndex={open ? 0 : -1} onClick={onCV}>Download CV ↓</button>
         <a tabIndex={open ? 0 : -1} href={`mailto:${studio.email}`}>{studio.email}</a>
         <a tabIndex={open ? 0 : -1} href={studio.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a tabIndex={open ? 0 : -1} href={studio.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
         <a tabIndex={open ? 0 : -1} href={studio.brandUrl} target="_blank" rel="noreferrer">Estech Solutions ↗</a>
       </div>
     </div>

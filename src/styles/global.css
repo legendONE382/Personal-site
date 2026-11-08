@@ -21,6 +21,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; background: var(--ink); color: var(--bone); }
+html { scroll-behavior: smooth; }
 body { font: 400 1rem/1.55 var(--sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure { margin: 0; padding: 0; }
 ul, ol { list-style: none; }
@@ -70,7 +71,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 /* ───────────── HUD ───────────── */
 .hud { position: fixed; z-index: 40; pointer-events: none; }
 .hud > *, .hud a, .hud button { pointer-events: auto; }
-.hud--top { inset: 0 0 auto 0; display: flex; justify-content: space-between; align-items: flex-start; padding: var(--pad); }
+.hud--top { inset: 0 0 auto 0; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; padding: max(var(--pad), env(safe-area-inset-top)) max(var(--pad), env(safe-area-inset-right)) var(--pad) max(var(--pad), env(safe-area-inset-left)); }
 .brand { display: flex; align-items: center; gap: 0.8rem; text-align: left; }
 .brand__mark { width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 2px solid var(--amber); position: relative; flex: none; transition: transform 0.6s var(--out); }
 .brand:hover .brand__mark { transform: rotate(180deg) scale(1.1); }
@@ -78,6 +79,57 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .brand__name { display: block; font: 500 1rem/1.1 var(--sans); }
 .brand__sub { display: block; margin-top: 0.15rem; font: 500 0.78rem/1.2 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--mute); }
 .hud__right { display: flex; align-items: center; gap: 0.35rem; }
+
+/* ── primary navigation ───────────── */
+.hud__primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(239, 234, 224, 0.45);
+  color: var(--bone-2);
+  background: rgba(5, 6, 10, 0.55);
+  backdrop-filter: blur(8px);
+  font: 500 0.85rem/1 var(--sans);
+  transition: background 0.3s var(--out), color 0.3s var(--out), border-color 0.3s var(--out);
+  white-space: nowrap;
+}
+.nav-item:hover, .nav-item:focus-visible {
+  background: var(--bone);
+  color: var(--ink);
+  border-color: var(--bone);
+}
+.nav-item--cv {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #1a1004;
+}
+.nav-item--cv:hover {
+  background: var(--bone);
+  border-color: var(--bone);
+  color: var(--ink);
+}
+
+/* ── mobile navigation (primary nav wraps in the header; touch-friendly, top bar, no permanent bottom bar) ───────────── */
+@media (max-width: 860px) {
+  .nav-item {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+  }
+  .nav-item--cv {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
 
 .hud--left { left: var(--pad); bottom: var(--pad); display: flex; align-items: flex-end; gap: 1.2rem; }
 .counter { font: 400 2rem/1 var(--serif); letter-spacing: -0.01em; }
@@ -254,6 +306,33 @@ html.has-cursor input, html.has-cursor textarea { cursor: text !important; }
 .fb__note { margin: 1rem 0 0; padding: 1rem 1.2rem; border: 1px solid var(--line); border-radius: 14px; color: var(--bone-2); display: flex; flex-wrap: wrap; gap: 0.8rem 1.2rem; align-items: center; }
 .fb h1 { margin-top: 5rem; font: 400 clamp(3.2rem, 11vw, 8rem)/0.92 var(--serif); letter-spacing: -0.02em; }
 .fb h1 em { color: var(--amber); }
+
+/* ── fallback navigation ───────────── */
+.fb-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+  background: rgba(5, 6, 10, 0.55);
+  backdrop-filter: blur(10px);
+}
+.fb-nav a, .fb-nav button {
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--bone-2);
+  font: 500 0.9rem var(--sans);
+  white-space: nowrap;
+  background: rgba(5, 6, 10, 0.35);
+}
+.fb-nav a:hover, .fb-nav button:hover { color: var(--bone); border-color: var(--bone); background: var(--bone); color: var(--ink); }
+.fb section, .fb h1#fb-home { scroll-margin-top: 9rem; }
 .fb section { margin-top: 5rem; }
 .fb article { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--line); }
 .fb article h3 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
@@ -290,6 +369,7 @@ html.has-cursor input, html.has-cursor textarea { cursor: text !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  html { scroll-behavior: auto !important; }
 }
 
 /* ── corner utilities: skip / calm / full-screen live here, out of the way ── */

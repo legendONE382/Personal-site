@@ -4,8 +4,8 @@
  * critical path. The geometry for each scene lives in world/config.ts.
  */
 export const SCENES = [
-  { id: 'ignition', label: 'Ignition' },
-  { id: 'statement', label: 'Signal' },
+  { id: 'ignition', label: 'Home' },
+  { id: 'statement', label: 'About' },
   { id: 'lumora', label: 'Lumora AI' },
   { id: 'tradepulse', label: 'TradePulse' },
   { id: 'askdocs', label: 'AskDocs' },

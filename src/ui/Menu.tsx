@@ -10,10 +10,11 @@ interface Props {
   onHover: (k: number) => void
   onDossier: () => void
   onCV: () => void
+  onCalm: () => void
 }
 
 /** Full-screen menu. The darkening wipe is a shader in the post lens; this is only its text. */
-export function Menu({ open, scene, onJump, onHover, onDossier, onCV }: Props) {
+export function Menu({ open, scene, onJump, onHover, onDossier, onCV, onCalm }: Props) {
   return (
     <div className={clsx('menu', open && 'is-open')} role={open ? 'dialog' : undefined} aria-modal={open || undefined} aria-label="Menu" aria-hidden={!open}>
       <nav aria-label="Scenes">
@@ -40,6 +41,7 @@ export function Menu({ open, scene, onJump, onHover, onDossier, onCV }: Props) {
       <div className="menu__foot">
         <button tabIndex={open ? 0 : -1} onClick={onDossier}>Dossier</button>
         <button tabIndex={open ? 0 : -1} onClick={onCV}>Download CV ↓</button>
+        <button tabIndex={open ? 0 : -1} onClick={onCalm}>Calm version</button>
         <a tabIndex={open ? 0 : -1} href={`mailto:${studio.email}`}>{studio.email}</a>
         <a tabIndex={open ? 0 : -1} href={studio.github} target="_blank" rel="noreferrer">GitHub ↗</a>
         <a tabIndex={open ? 0 : -1} href={studio.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>

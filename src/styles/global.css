@@ -38,7 +38,11 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 [data-lenis-prevent] { overscroll-behavior: contain; }
 
 #gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
-#scroll-space { height: 900vh; pointer-events: none; }
+/* One viewport per scene-to-scene step: ~720vh desktop, ~600vh on touch devices. */
+#scroll-space { height: 720vh; pointer-events: none; }
+@media (pointer: coarse) {
+  #scroll-space { height: 600vh; }
+}
 
 /* ───────────── buttons ───────────── */
 .btn {
@@ -71,7 +75,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 /* ───────────── HUD ───────────── */
 .hud { position: fixed; z-index: 40; pointer-events: none; }
 .hud > *, .hud a, .hud button { pointer-events: auto; }
-.hud--top { inset: 0 0 auto 0; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; padding: max(var(--pad), env(safe-area-inset-top)) max(var(--pad), env(safe-area-inset-right)) var(--pad) max(var(--pad), env(safe-area-inset-left)); }
+.hud--top { inset: 0 0 auto 0; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; padding: max(var(--pad), env(safe-area-inset-top)) max(var(--pad), env(safe-area-inset-right)) 0.7rem max(var(--pad), env(safe-area-inset-left)); }
 .brand { display: flex; align-items: center; gap: 0.8rem; text-align: left; }
 .brand__mark { width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 2px solid var(--amber); position: relative; flex: none; transition: transform 0.6s var(--out); }
 .brand:hover .brand__mark { transform: rotate(180deg) scale(1.1); }
@@ -140,6 +144,10 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .hint i { display: block; width: 1px; height: 2.6rem; background: rgba(239, 234, 224, 0.25); position: relative; overflow: hidden; }
 .hint i::after { content: ''; position: absolute; inset: 0 0 50% 0; background: var(--amber); animation: cue 1.9s var(--out) infinite; }
 @keyframes cue { from { transform: translateY(-110%); } to { transform: translateY(210%); } }
+
+/* scroll progress meter: overall journey progress 0 → 1, driven by --p */
+.meter { margin-top: 0.5rem; width: 6.5rem; height: 0.4rem; background: rgba(239, 234, 224, 0.12); border-radius: 999px; overflow: hidden; }
+.meter__fill { display: block; height: 100%; background: var(--amber); width: calc(var(--p) * 100%); transition: width 0.3s ease; }
 
 .dots { position: fixed; right: var(--pad); top: 50%; transform: translateY(-50%); z-index: 40; display: flex; flex-direction: column; gap: 0.1rem; }
 .dot-btn { width: 2rem; height: 1.7rem; display: grid; place-items: center end; }
@@ -348,7 +356,7 @@ html.has-cursor input, html.has-cursor textarea { cursor: text !important; }
   .hide-sm { display: none !important; }
   .brand__sub { display: none; }
   .dots, .hud--left .counter__label { display: none; }
-  .hud--left { gap: 0.8rem; }
+  .hud--left { flex-direction: column; align-items: flex-end; gap: 0.5rem; }
   .counter { font-size: 1.5rem; }
   .panel__body, .panel--statement .panel__body, .panel--project .panel__body, .panel--contact .panel__body { left: var(--pad); right: var(--pad); width: auto; top: auto; bottom: calc(var(--pad) + 3.6rem); transform: none; }
   .panel__body::before, .panel--contact .panel__body::before { inset: -3rem -1.2rem -4rem; background: linear-gradient(to top, rgba(5, 6, 10, 0.93) 55%, rgba(5, 6, 10, 0)); }
@@ -356,6 +364,8 @@ html.has-cursor input, html.has-cursor textarea { cursor: text !important; }
   .panel--contact .panel__body .lead, .panel--contact .panel__body .kicker { display: none; }
   .form { gap: 0.7rem; margin-top: 0.4rem; }
   .panel--ignition .kicker { font-size: 0.72rem; letter-spacing: 0.1em; }
+  .panel--ignition .lead { margin-bottom: 0.6rem; }
+  .panel--ignition .cta-row { margin-top: 1.4rem; }
   .big { font-size: clamp(1.3rem, 5.4vw, 1.7rem); }
   .blurb { font-size: clamp(1.6rem, 7vw, 2.1rem); }
   .lead { font-size: 1rem; margin-top: 0.7rem; }

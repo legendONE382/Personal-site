@@ -364,12 +364,9 @@ function Experience({ reduced, patient }: { reduced: boolean; patient: boolean }
         full={full}
         onSound={toggleSound}
         onMenu={() => setMenu((m) => !m)}
-        onDossier={() => setDossier('about')}
         onJump={jump}
         onSkip={skipIntro}
         onFull={toggleFull}
-        onCalm={calm}
-        onCV={cv}
       />
       <Menu
         open={menu}
@@ -381,6 +378,7 @@ function Experience({ reduced, patient }: { reduced: boolean; patient: boolean }
           setDossier('about')
         }}
         onCV={cv}
+        onCalm={calm}
       />
       <Loader
         done={phase === 'live'}

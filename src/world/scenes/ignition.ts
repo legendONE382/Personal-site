@@ -55,7 +55,7 @@ export function createIgnition(): SceneModule {
       /* fit by width AND by height, so a wide-but-short laptop screen can't push
          the headline down into the HTML copy below it */
       const byW = (ctx.viewW * 0.9) / title.width
-      const byH = (ctx.viewH * (ctx.portrait ? 0.3 : 0.36)) / title.height
+      const byH = (ctx.viewH * (ctx.portrait ? 0.22 : 0.36)) / title.height
       const sc = Math.min(1, byW, byH)
       title.mesh.scale.setScalar(sc)
       if (!ctx.portrait) {
@@ -63,7 +63,9 @@ export function createIgnition(): SceneModule {
         const p = ctx.localFromScreen(0.055, 0.17)
         title.mesh.position.set(p.x + (title.width * sc) / 2, p.y - (title.height * sc) / 2, 0.6)
       } else {
-        const p = ctx.localFromScreen(0.5, 0.49)
+        // portrait: hold the headline in the upper zone, clear of the HTML
+        // introduction that anchors to the bottom of the screen.
+        const p = ctx.localFromScreen(0.5, 0.30)
         title.mesh.position.set(p.x, p.y, 0.6)
       }
       title.set(Math.min(ctx.introReveal, reveal), Math.min(1, ctx.introReveal * 2) * pres)

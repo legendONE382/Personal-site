@@ -10,18 +10,15 @@ interface Props {
   full: boolean
   onSound: () => void
   onMenu: () => void
-  onDossier: () => void
   onJump: (k: number) => void
   onSkip: () => void
   onFull: () => void
-  onCalm: () => void
-  onCV: () => void
 }
 
 const canFull = typeof document !== 'undefined' && 'requestFullscreen' in HTMLElement.prototype
 
-/** Always-reachable chrome: it never covers the world and never blocks it. */
-export function Hud({ scene, live, intro, sound, menuOpen, full, onSound, onMenu, onDossier, onJump, onSkip, onFull, onCalm, onCV }: Props) {
+/** One compact top bar: brand plus the single Menu entry point. */
+export function Hud({ scene, live, intro, sound, menuOpen, full, onSound, onMenu, onJump, onSkip, onFull }: Props) {
   return (
     <>
       <header className="hud hud--top">
@@ -29,30 +26,11 @@ export function Hud({ scene, live, intro, sound, menuOpen, full, onSound, onMenu
           <span className="brand__mark" aria-hidden="true" />
           <span>
             <span className="brand__name">Emmanuel Uchenna</span>
-            <span className="brand__sub">Software studio · Lagos</span>
           </span>
         </button>
-        <nav className="hud__primary" aria-label="Primary navigation">
-          <a className="nav-item" onClick={() => onJump(0)}>Home</a>
-          <a className="nav-item" onClick={() => onJump(1)}>About</a>
-          <a className="nav-item" onClick={() => onJump(2)}>Projects</a>
-          <a className="nav-item" onClick={() => onJump(6)}>Contact</a>
-          <button className="nav-item nav-item--cv" onClick={onCV}>Download CV ↓</button>
-        </nav>
-        <nav className="hud__right" aria-label="Utilities">
-          <button className="link-btn hide-sm" onClick={onDossier}>Dossier</button>
-          <button className="link-btn" aria-pressed={sound} onClick={onSound}>
-            Sound {sound ? 'on' : 'off'}
-          </button>
-          {canFull && (
-            <button className="link-btn hide-md" onClick={onFull} aria-pressed={full}>
-              {full ? 'Exit full screen' : 'Full screen'}
-            </button>
-          )}
-          <button className="menu-btn" aria-expanded={menuOpen} onClick={onMenu}>
-            {menuOpen ? 'Close' : 'Menu'} <i aria-hidden="true" />
-          </button>
-        </nav>
+        <button className="menu-btn" aria-expanded={menuOpen} onClick={onMenu}>
+          {menuOpen ? 'Close' : 'Menu'} <i aria-hidden="true" />
+        </button>
       </header>
 
       {live && !menuOpen && (
@@ -60,11 +38,15 @@ export function Hud({ scene, live, intro, sound, menuOpen, full, onSound, onMenu
           <div className="counter" aria-live="polite">
             {String(scene + 1).padStart(2, '0')}
             <small>/ {String(SCENES.length).padStart(2, '0')}</small>
-            <span className="counter__label">{SCENES[scene].label}</span>
           </div>
-          <div className={scene <= 1 && !intro ? 'hint' : 'hint is-hidden'} aria-hidden="true">
-            <i /> Scroll
+          <div className="meter" aria-hidden="true">
+            <span className="meter__fill" />
           </div>
+          {scene < SCENES.length - 1 && (
+            <div className="hint" aria-hidden="true">
+              <i /> Scroll → next scene
+            </div>
+          )}
         </aside>
       )}
 
@@ -76,18 +58,22 @@ export function Hud({ scene, live, intro, sound, menuOpen, full, onSound, onMenu
         </nav>
       )}
 
-      {/* corner utilities: only once the world is up, since the loader owns that
-          corner while it is still charging (it has its own escape hatch) */}
+      {/* discreet corner utilities: skip intro while it plays, then sound / full-screen */}
       {live && (
         <div className="hud hud--escape">
-        {intro && (
-          <button className="link-btn" onClick={onSkip}>
-            Skip intro
+          {intro && (
+            <button className="link-btn" onClick={onSkip}>
+              Skip intro
+            </button>
+          )}
+          <button className="link-btn" aria-pressed={sound} onClick={onSound}>
+            Sound {sound ? 'on' : 'off'}
           </button>
-        )}
-        <button className="link-btn" onClick={onCalm}>
-          Calm version
-        </button>
+          {canFull && (
+            <button className="link-btn" onClick={onFull} aria-pressed={full}>
+              {full ? 'Exit full screen' : 'Full screen'}
+            </button>
+          )}
         </div>
       )}
     </>
